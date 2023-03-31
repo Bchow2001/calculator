@@ -20,14 +20,17 @@ body {
 
 .display-wrapper {
     display:flex;
+    flex-direction: column;
     height: 50px;
     width : 300px;
     justify-content: center;
     align-items: center;
 }
 
+#display-input,
 #display-output {
     font-size: 23px;
+    align-self:flex-end;
 }
 
 .grid{
