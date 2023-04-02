@@ -92,13 +92,15 @@ function calculate() {
     concatenateArray();
     var rounded = Math.round((iterativeCalc(cleanDigits)*1000))/1000  
     output.textContent = rounded;
-    // console.log(iterativeCalc(cleanDigits));
+    equal.removeEventListener("click", calculate);
 }
 
 function clear() {
     input.textContent = "";
+    output.textContent = "";
     cleanDigits = [];
     displayDigits =[];
+    equal.addEventListener("click", calculate);
 }
 
 
