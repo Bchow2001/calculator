@@ -57,7 +57,7 @@ function concatenateArray() {
         if (i == displayDigits.length -1) {
             digits += digit.toString();
             cleanDigits.push(digits);
-        } else if (!isNaN(digit)){
+        } else if (!isNaN(digit) || digit === "."){
             return digits += digit.toString();
         } else {
             cleanDigits.push(digits);
@@ -69,28 +69,32 @@ function concatenateArray() {
 }
 
 function calculation(arrayOfThree) {
-    num1 = parseInt(arrayOfThree[0]);
-    num2 = parseInt(arrayOfThree[2]);
+    num1 = parseFloat(arrayOfThree[0]);
+    num2 = parseFloat(arrayOfThree[2]);
     return operate(arrayOfThree[1]);
 }
 
 function iterativeCalc(array) {
     if (array.length < 3) {
         return "Syntax Error";
-    } else if (array.length === 3){
-        return calculation(array)
+    } else if (array.length == 3){
+        return calculation(array);
     } else {
-        var firstThree = array.splice(0,3)
+        var firstThree = array.splice(0,3);
         var calculated = [calculation(firstThree)];
-        return iterativeCalc(calculated.concat(array));
-    }
+        var newArray = calculated.concat(array);
+        return iterativeCalc(newArray);
+    };
 }
+// We need to set new variables as array is getting stored
+// When we call the function recursively
+// Set a new variable for original array
 
 
 function calculate() {
     concatenateArray();
     if (iterativeCalc(cleanDigits) === NaN) {
-        output.textContent = "Syntax Error"
+        output.textContent = "NaN";
     } else {
         output.textContent = iterativeCalc(cleanDigits);
     }
@@ -101,8 +105,9 @@ function clear() {
     input.textContent = "";
     output.textContent = "";
     cleanDigits = [];
-    displayDigits =[]
+    displayDigits =[];
 }
+
 
 
 btns.forEach(btn => {
