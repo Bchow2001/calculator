@@ -76,9 +76,9 @@ function calculation(arrayOfThree) {
 
 function iterativeCalc(array) {
     if (array.length < 3) {
-        return "Syntax Error";
-    } else if (array.length == 3){
-        return calculation(array);
+        return "Input more numbers/operators"
+    } else if (array.length === 3){
+        return calculation(array)
     } else {
         var firstThree = array.splice(0,3);
         var calculated = [calculation(firstThree)];
@@ -92,18 +92,13 @@ function iterativeCalc(array) {
 
 
 function calculate() {
-    concatenateArray();
-    if (iterativeCalc(cleanDigits) === NaN) {
-        output.textContent = "NaN";
-    } else {
-        output.textContent = iterativeCalc(cleanDigits);
-    }
+    concatenateArray();    
+    output.textContent = iterativeCalc(cleanDigits);
     // console.log(iterativeCalc(cleanDigits));
 }
 
 function clear() {
     input.textContent = "";
-    output.textContent = "";
     cleanDigits = [];
     displayDigits =[];
 }
