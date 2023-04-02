@@ -86,14 +86,12 @@ function iterativeCalc(array) {
         return iterativeCalc(newArray);
     };
 }
-// We need to set new variables as array is getting stored
-// When we call the function recursively
-// Set a new variable for original array
 
 
 function calculate() {
-    concatenateArray();    
-    output.textContent = iterativeCalc(cleanDigits);
+    concatenateArray();
+    var rounded = Math.round((iterativeCalc(cleanDigits)*1000))/1000  
+    output.textContent = rounded;
     // console.log(iterativeCalc(cleanDigits));
 }
 
