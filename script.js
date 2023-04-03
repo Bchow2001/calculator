@@ -7,7 +7,7 @@ const output = document.querySelector("#display-output");
 const btns = document.querySelectorAll(".normal");
 const equal = document.querySelector("#equal");
 const ac = document.querySelector("#ac");
-const clear = document.querySelector("#Backspace");
+const clear = document.querySelector("#clear");
 
 
 function add(a, b) {
@@ -92,10 +92,11 @@ function iterativeCalc(array) {
 
 
 function calculate() {
-    equal.removeEventListener("click", calculate);
     concatenateArray();
     if (!isNaN(iterativeCalc(cleanDigits))) {
         var rounded = Math.round((iterativeCalc(cleanDigits)*1000))/1000  
+        displayDigits = [rounded];
+        cleanDigits = [];
         return output.textContent = rounded;
     } else if (iterativeCalc(cleanDigits) === 
     "Don't Try to Divide by zero you Bitch") {
@@ -112,6 +113,7 @@ function clearAll() {
     displayDigits =[];
     equal.addEventListener("click", calculate);
 }
+
 
 function clearOne() {
     displayDigits.pop();
@@ -146,9 +148,10 @@ document.addEventListener("keydown", event => {
     }
 })
 
+clear.addEventListener("click", clearOne);
+
 equal.addEventListener("click", calculate);
 
 ac.addEventListener("click", clearAll);
 
-clear.addEventListener("click", clearOne);
 
