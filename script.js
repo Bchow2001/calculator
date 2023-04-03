@@ -1,11 +1,13 @@
 var num1, num2, operator;
 var displayDigits = [];
 var cleanDigits = [];
+const keyBoard = [1,2,3,4,5,6,7,8,9,0,"+","-","/","*","Backspace"]
 const input = document.querySelector("#display-input");
 const output = document.querySelector("#display-output");
 const btns = document.querySelectorAll(".normal");
 const equal = document.querySelector("#equal");
 const ac = document.querySelector("#ac");
+const clear = document.querySelector("#Backspace");
 
 
 function add(a, b) {
@@ -76,26 +78,34 @@ function calculation(arrayOfThree) {
 
 function iterativeCalc(array) {
     if (array.length < 3) {
-        return "Input more numbers/operators"
+        return "Input more numbers/operators";
     } else if (array.length === 3){
-        return calculation(array)
+        return calculation(array);
     } else {
-        var firstThree = array.splice(0,3);
+        var firstThree = array.slice(0,3);
+        var rest = array.slice(3);
         var calculated = [calculation(firstThree)];
-        var newArray = calculated.concat(array);
+        var newArray = calculated.concat(rest);
         return iterativeCalc(newArray);
     };
 }
 
 
 function calculate() {
-    concatenateArray();
-    var rounded = Math.round((iterativeCalc(cleanDigits)*1000))/1000  
-    output.textContent = rounded;
     equal.removeEventListener("click", calculate);
+    concatenateArray();
+    if (!isNaN(iterativeCalc(cleanDigits))) {
+        var rounded = Math.round((iterativeCalc(cleanDigits)*1000))/1000  
+        return output.textContent = rounded;
+    } else if (iterativeCalc(cleanDigits) === 
+    "Don't Try to Divide by zero you Bitch") {
+        return output.textContent = "Don't Try to Divide by zero you Bitch";
+    } else {
+        return output.textContent = "Syntax Error";
+    }
 }
 
-function clear() {
+function clearAll() {
     input.textContent = "";
     output.textContent = "";
     cleanDigits = [];
@@ -103,18 +113,42 @@ function clear() {
     equal.addEventListener("click", calculate);
 }
 
+function clearOne() {
+    displayDigits.pop();
+    input.textContent = displayDigits.join("");
+}
+
 
 
 btns.forEach(btn => {
     btn.addEventListener("click", event =>{
-        input.textContent += btn.textContent;
         displayDigits.push(btn.id);
+        input.textContent = displayDigits.join("");
     })
 });
 
+document.addEventListener("keydown", event => {
+    console.log(event.key);
+    if (!isNaN(event.key)) {
+        displayDigits.push(event.key);
+        input.textContent = displayDigits.join("");
+    } else if (event.key === "+" || 
+    event.key === "-" || 
+    event.key === "*" ||
+    event.key === "/" ||
+    event.key === ".") {
+        displayDigits.push(event.key);
+        input.textContent = displayDigits.join("");
+    } else if (event.key === "=" || event.key === "Enter") {
+        return calculate();
+    } else if (event.key === "Backspace") {
+        return clearOne();
+    }
+})
+
 equal.addEventListener("click", calculate);
 
-ac.addEventListener("click", clear);
+ac.addEventListener("click", clearAll);
 
-
+clear.addEventListener("click", clearOne);
 
